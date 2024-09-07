@@ -26,13 +26,13 @@ class StoreCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'id'=>'required|unique:categories,id',
+//            'id'=>'required|unique:categories,id',
             'name'=>'required',
         ];
     }
 
     public function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(response($validator->errors(), 422));
+        throw new HttpResponseException(response(["errors"=>$validator->errors()], 422));
     }
 }

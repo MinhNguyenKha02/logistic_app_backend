@@ -34,7 +34,7 @@ class UpdateOrderRequest extends FormRequest
             return $rules;
         }else if($this->method() == 'PUT'){
             return [
-                'id'=>'required',
+//                'id'=>'required',
                 'customer_id'=>'required',
                 'product_id'=>'required',
                 'date'=>'required|date',
@@ -46,6 +46,7 @@ class UpdateOrderRequest extends FormRequest
 
     public function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(response($validator->errors(),422));
+        throw new HttpResponseException(response(["errors"=>$validator->errors()], 422));
+
     }
 }

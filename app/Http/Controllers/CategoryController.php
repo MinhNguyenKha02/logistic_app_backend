@@ -28,6 +28,7 @@ class CategoryController extends Controller
     public function store(StoreCategoryRequest $request)
     {
         $validatedData = $request->validated();
+        $validatedData["id"] = Category::newestCategoryId();
         Log::warning($validatedData);
         Category::create($validatedData);
         return response(["message"=>"Category is created", "category"=>$validatedData], 200);

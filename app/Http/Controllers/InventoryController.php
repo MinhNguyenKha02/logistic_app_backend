@@ -11,19 +11,62 @@ use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
+use App\Enums\Unit;
 use Symfony\Component\ErrorHandler\Debug;
 
 class InventoryController extends Controller
 {
+
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return response(['inventories'=>Inventory::all()], 200);
+        $directions = ["asc", "desc"];
+        $type = $request['type'];
+        $direction = $request['direction'];
+        if($direction==""||!$direction){
+            $inventory = Inventory::query()->paginate(3);
+            return response(["inventories"=>$inventory], 200);
+        }else{
+            $inventory = Inventory::query()->orderBy($type, $direction)->paginate(3);
+
+            return response([
+                "inventories" => $inventory
+            ], 200);
+        }
+//        return response(['inventories'=>Inventory::all()], 200);
+
+
     }
+    public function search(Request $request){
+        $keyword = $request['keyword'];
+        $inventory = Inventory::query()->where("warehouse_id", "like", "%$keyword%")
+                                        ->orWhere("product_id", "like", "%$keyword%")
+                                        ->orwhere("quantity", "like", "%$keyword%")
+                                        ->orwhere("unit", "like", "%$keyword%")
+                                        ->orWhere("id", "like", "%$keyword%")
+                                        ->paginate(3);
+        if($inventory){
+            return response($inventory, 200);
+        }
+    }
+
+    public function order(Request $request)
+    {
+        $directions = ["asc", "desc"];
+        $type = $request['type'];
+        $direction = $request['direction'];
+        if($direction==""||!$direction){
+            return response(Inventory::query()->paginate(3), 200);
+        }else{
+            return response(Inventory::query()->orderBy($type, $direction)->paginate(3), 200);
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -33,6 +76,7 @@ class InventoryController extends Controller
     public function store(StoreInventoryRequest $request)
     {
         $validatedData = $request->validated();
+        $validatedData["id"] = Inventory::newestInventoryId();
         Inventory::create($validatedData);
 
         $inventory = Inventory::find($validatedData['id']);
@@ -75,6 +119,12 @@ class InventoryController extends Controller
     public function destroy(Inventory $inventory)
     {
         $inventory->delete();
-        return response(["message"=>"Inventory is deleted"],200);
+        return response(["message"=>"Inventory is deleted"],204);
     }
+
+    public function units()
+    {
+        return response(["units"=>Unit::cases()], 200);
+    }
+
 }

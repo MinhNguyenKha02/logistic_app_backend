@@ -27,15 +27,15 @@ class StoreInventoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'id'=>'required|unique:inventories,id',
+//            'id'=>'required|unique:inventories,id',
             'warehouse_id'=>'required',
             'product_id'=>'required',
-            'quantity'=>'required',
+            'quantity'=>'required|numeric|max:1000',
             'unit'=>'required',
         ];
     }
     public function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(response($validator->errors(), 422));
+        throw new HttpResponseException(response(["errors"=>$validator->errors()], 422));
     }
 }

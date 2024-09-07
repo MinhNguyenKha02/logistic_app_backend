@@ -25,9 +25,10 @@ class ReturnOrderController extends Controller
      */
     public function store(StoreReturnOrderRequest $request){
         $validatedData = $request->validated();
+        $validatedData["id"]=ReturnOrder::newestReturnOrderId();
         ReturnOrder::create($validatedData);
         $returnOrder = ReturnOrder::find($validatedData['id']);
-        return response(['message'=>'Return order is created','return_order'=>$returnOrder],200);
+        return response(['message'=>'Return order is created','return_order'=>$returnOrder],201);
     }
     /**
      * Display the specified resource.

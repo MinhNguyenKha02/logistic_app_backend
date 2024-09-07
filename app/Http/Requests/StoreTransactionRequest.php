@@ -26,7 +26,7 @@ class StoreTransactionRequest extends FormRequest
     public function rules()
     {
         return [
-            'id'=>'required|unique:transactions,id',
+//            'id'=>'required|unique:transactions,id',
             'product_id'=>"required",
             'date'=>"date|required",
             'type'=>"required",
@@ -37,6 +37,6 @@ class StoreTransactionRequest extends FormRequest
     }
     public function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(response($validator->errors(), 422));
+        throw new HttpResponseException(response(["errors"=>$validator->errors()], 422));
     }
 }

@@ -26,7 +26,7 @@ class StoreOrderRequest extends FormRequest
     public function rules()
     {
         return [
-            'id'=>'required|unique:orders,id',
+//            'id'=>'required|unique:orders,id',
             'customer_id'=>'required',
             'product_id'=>'required',
             'date'=>'required|date',
@@ -37,6 +37,6 @@ class StoreOrderRequest extends FormRequest
 
     public function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(response($validator->errors(),422));
+        throw new HttpResponseException(response(["errors"=>$validator->errors()], 422));
     }
 }

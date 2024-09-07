@@ -26,7 +26,7 @@ class StoreWarehouseRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required|unique:warehouses,id',
+//            'id' => 'required|unique:warehouses,id',
             'name' => 'required',
             'address' => 'required',
             'capacity' => 'required',
@@ -37,6 +37,6 @@ class StoreWarehouseRequest extends FormRequest
 
     public function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(response($validator->errors(), 422));
+        throw new HttpResponseException(response(["errors"=>$validator->errors()], 422));
     }
 }

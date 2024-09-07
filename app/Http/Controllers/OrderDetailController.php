@@ -28,12 +28,13 @@ class OrderDetailController extends Controller
     public function store(StoreOrderDetailRequest $request)
     {
         $validatedData = $request->validated();
+        $validatedData["id"] = OrderDetail::newestOrderDetailId();
         $order_id = $validatedData['order_id'];
         $order = Order::find($order_id);
         if(!$order->orderDetail){
             OrderDetail::create($validatedData);
             $orderDetail = OrderDetail::find($validatedData['id']);
-            return response(["message" => "Order detail is created", "order_detail"=>$orderDetail], 200);
+            return response(["message" => "Order detail is created", "order_detail"=>$orderDetail], 201);
         }else{
             return response(["message" => "Order detail is already created, check your order_id"], 400);
         }

@@ -28,9 +28,10 @@ class WarehouseController extends Controller
     public function store(StoreWarehouseRequest $request)
     {
         $validatedData = $request->validated();
+        $validatedData["id"]=Warehouse::newestWarehouseId();
         Warehouse::create($validatedData);
         $warehouse=Warehouse::find($validatedData['id']);
-        return response(["message"=>"Warehouse is created", "warehouse"=>$warehouse], 200);
+        return response(["message"=>"Warehouse is created", "warehouse"=>$warehouse], 201);
     }
 
     /**

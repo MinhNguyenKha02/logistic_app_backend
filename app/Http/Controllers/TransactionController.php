@@ -2,12 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\TransactionStatus;
+use App\Enums\TransactionType;
+use App\Enums\Unit;
 use App\Http\Requests\StoreTransactionRequest;
 use App\Http\Requests\UpdateTransactionRequest;
 use App\Models\Transaction;
+use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends Controller
 {
+    public function units()
+    {
+        return response(["units"=>Unit::cases()], 200);
+    }
+    public function status(){
+        return response(["statuss"=>TransactionStatus::cases()],200);
+    }
+    public function types(){
+        return response(["types"=>TransactionType::cases()],200);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -27,9 +41,10 @@ class TransactionController extends Controller
     public function store(StoreTransactionRequest $request)
     {
         $validatedData = $request->validated();
+        $validatedData['id'] = Transaction::newestTransactionId();
         Transaction::create($validatedData);
         $transactions = Transaction::find($validatedData['id']);
-        return response(["message"=>"Transaction is created",'transaction'=>$transactions], 200);
+        return response(["message"=>"Transaction is created",'transaction'=>$transactions],201);
     }
 
     /**
@@ -65,6 +80,7 @@ class TransactionController extends Controller
      */
     public function destroy(Transaction $transaction)
     {
-        return response(['transaction'=>$transaction], 200);
+        $transaction->delete();
+        return response(['message'=>"Transaction is deleted"], 204);
     }
 }

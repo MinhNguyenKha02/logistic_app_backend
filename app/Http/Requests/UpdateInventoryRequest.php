@@ -30,8 +30,8 @@ class UpdateInventoryRequest extends FormRequest
             $fields = array_keys($this->all());
             foreach ($fields as $field) {
                 $rules[$field] = "required";
-                if($field=='id')
-                    $rules[$field] = "required";
+//                if($field=='id')
+//                    $rules[$field] = "required";
 
                 if($field=='quantity')
                     $rules['quantity'] = "required|numeric|max:1000";
@@ -39,10 +39,10 @@ class UpdateInventoryRequest extends FormRequest
             return $rules;
         }else if($this->method() == 'PUT'){
             return [
-                'id'=>'required',
+//                'id'=>'required',
                 'warehouse_id'=>'required',
                 'product_id'=>'required',
-                'quantity'=>'required|max:1000',
+                'quantity'=>'required|numeric|max:1000',
                 'unit'=>'required',
             ];
         }

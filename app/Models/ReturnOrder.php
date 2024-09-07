@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 class ReturnOrder extends Model
 {
@@ -25,5 +26,26 @@ class ReturnOrder extends Model
     }
     public function product(){
         return $this->belongsTo(Product::class, 'product_id', 'id');
+    }
+    public static function newestReturnOrderId(){
+        $lastReturnOrder = ReturnOrder::all();
+
+        Log::info(count($lastReturnOrder));
+        if (count($lastReturnOrder) == 0) {
+            $id = "RTO0";
+        } else{
+            $lastReturnOrder = ReturnOrder::latest()->first();
+            $id = $lastReturnOrder["id"];
+        }
+        $pattern = "/\d+/";
+        $match="";
+        if(preg_match($pattern, $id, $match)){
+            Log::info($match);
+            $number = (int)$match[0]+1;
+            Log::info("before replace".$id.", ".$number.", ".$match[0]);
+            $id=str_replace($match[0],(string)$number,$id);
+            Log::info("replaced".$id.", ".$number.", ".$match[0]);
+            return $id;
+        }
     }
 }

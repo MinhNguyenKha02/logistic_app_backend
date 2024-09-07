@@ -2,20 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Status;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Order;
 use App\Models\OrderDetail;
+use Nyholm\Psr7\Request;
 
 class OrderController extends Controller
 {
+    public function status(){
+        return response(["status"=>Status::cases()],200);
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $keyword = $request["keyword"];
+
         return response(["orders"=>Order::all()], 200);
     }
 
@@ -28,6 +36,7 @@ class OrderController extends Controller
     public function store(StoreOrderRequest $request)
     {
         $validatedData = $request->validated();
+        $validatedData["id"] = Order::newestOrderId();
         Order::create($validatedData);
 
         $order = Order::find($validatedData['id']);

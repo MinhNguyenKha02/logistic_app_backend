@@ -30,8 +30,8 @@ class UpdateCategoryRequest extends FormRequest
             $fields = array_keys($this->all());
             foreach ($fields as $field) {
                 $rules[$field] = "required";
-                if($field=='id')
-                    $rules[$field] = "required";
+//                if($field=='id')
+//                    $rules[$field] = "required";
             }
             return $rules;
         }else if($this->method() == 'PUT'){
@@ -44,6 +44,6 @@ class UpdateCategoryRequest extends FormRequest
 
     public function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(response($validator->errors(), 422));
+        throw new HttpResponseException(response(["errors"=>$validator->errors()], 422));
     }
 }

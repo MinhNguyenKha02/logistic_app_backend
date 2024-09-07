@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Log;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -65,5 +66,30 @@ class User extends Authenticatable
     public function drug()
     {
         return $this->hasMany(\App\Models\Drug::class, 'user_id', 'id');
+    }
+
+    public static function newestUserId(){
+
+
+        $id = "";
+        $lastUser = User::all();
+
+        Log::info(count($lastUser));
+        if (count($lastUser) == 0) {
+            $id = "US0";
+        } else{
+            $lastUser = User::latest()->first();
+            $id = $lastUser["id"];
+        }
+        $pattern = "/\d+/";
+        $match="";
+        if(preg_match($pattern, $id, $match)){
+            Log::info($match);
+            $number = (int)$match[0]+1;
+            Log::info("before replace".$id.", ".$number.", ".$match[0]);
+            $id=str_replace($match[0],(string)$number,$id);
+            Log::info("replaced".$id.", ".$number.", ".$match[0]);
+            return $id;
+        }
     }
 }

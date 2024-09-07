@@ -29,15 +29,15 @@ class StoreShipmentRequest extends FormRequest
         $fields = array_keys($this->all());
         foreach ($fields as $field) {
             $rules[$field] = "required";
-            if($field == 'id'){
-                $rules[$field] = 'required|unique:shipments,id';
-            }
+//            if($field == 'id'){
+//                $rules[$field] = 'required|unique:shipments,id';
+//            }
         }
         return $rules;
     }
 
     public function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(response($validator->errors(), 422));
+        throw new HttpResponseException(response(["errors"=>$validator->errors()], 422));
     }
 }

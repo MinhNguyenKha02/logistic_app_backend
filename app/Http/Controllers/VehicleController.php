@@ -25,9 +25,10 @@ class VehicleController extends Controller
      */
     public function store(StoreVehicleRequest $request){
         $validatedData = $request->validated();
+        $validatedData["id"]=Vehicle::newestVehicleId();
         Vehicle::create($validatedData);
         $vehicle = Vehicle::find($validatedData['id']);
-        return response(['message'=>'Vehicle is created','vehicle'=>$vehicle],200);
+        return response(['message'=>'Vehicle is created','vehicle'=>$vehicle],201);
     }
     /**
      * Display the specified resource.
