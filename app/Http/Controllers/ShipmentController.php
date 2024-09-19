@@ -7,9 +7,11 @@ use App\Http\Requests\StoreShipmentRequest;
 use App\Http\Requests\UpdateShipmentRequest;
 use App\Models\Shipment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ShipmentController extends Controller
 {
+
 
     public function search(Request $request){
         $keyword = $request['keyword'];
@@ -29,6 +31,7 @@ class ShipmentController extends Controller
             return response(["message" => "Not Found"], 404);
         }
     }
+
 
     public function order(Request $request)
     {
@@ -116,6 +119,12 @@ class ShipmentController extends Controller
     public function destroy(Shipment $shipment)
     {
         $shipment->delete();
-        return response(["message"=>"Shipment is deleted"], 200);
+        return response(["message"=>"Shipment is deleted"], 204);
     }
+
+    public function getLatestShipment() {
+        $shipment = Shipment::query()->latest()->first();
+        return response(["shipment"=>$shipment],200);
+    }
+
 }

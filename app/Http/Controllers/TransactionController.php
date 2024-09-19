@@ -58,6 +58,12 @@ class TransactionController extends Controller
         return response(['transaction'=>$transaction], 200);
     }
 
+    public function getLatestTransaction(){
+        $transaction = Transaction::query()->latest()->first();
+        return response(['transaction'=>$transaction],200);
+    }
+
+
     /**
      * Update the specified resource in storage.
      *

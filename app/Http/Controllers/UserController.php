@@ -44,6 +44,7 @@ class UserController extends Controller
             $token = $user->createToken('MyApp')->accessToken;
             session()->put('token', $token);
             Log::warning("Controller, token ". session("token"));
+            broadcast(new MyEvent(["name"=>"bc"]))->toOthers();
             return response()->json(['token' => $token, 'user'=>$user], 200);
         }else{
             response(['message'=>'Invalid credentials'], 401);

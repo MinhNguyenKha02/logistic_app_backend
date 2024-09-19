@@ -40,6 +40,15 @@ class OrderController extends Controller
         Order::create($validatedData);
 
         $order = Order::find($validatedData['id']);
+
+//        "id": "ORD3",
+//        "order_id": "OD2",
+//        "quantity": 30,
+//        "price": 30,
+//        "created_at": "2024-07-31T10:20:54.000000Z",
+//        "updated_at": "2024-07-31T10:20:54.000000Z",
+//        "unit": "VND"
+
         return response(["message"=>"Order is created", 'inventory'=>$order],201);
     }
 
@@ -65,7 +74,7 @@ class OrderController extends Controller
     {
         $validatedData = $request->validated();
         $order->update($validatedData);
-        return response(["message"=>"Order is updated", 'order'=>$order],201);
+        return response(["message"=>"Order is updated", 'order'=>$order],200);
     }
 
     /**
@@ -77,6 +86,6 @@ class OrderController extends Controller
     public function destroy(Order $order)
     {
         $order->delete();
-        return response(["message"=>"Order is created", 'order'=>$order],201);
+        return response(["message"=>"Order is deleted"],204);
     }
 }

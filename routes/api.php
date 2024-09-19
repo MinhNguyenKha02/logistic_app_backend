@@ -55,6 +55,7 @@ Route::get('orders-status', [OrderController::class, 'status']);
 Route::apiResource('orders-detail', OrderDetailController::class);
 Route::apiResource('transactions', TransactionController::class);
 Route::get('transactions-status', [TransactionController::class, 'status']);
+Route::get('transaction-latest', [TransactionController::class, 'getLatestTransaction']);
 Route::get('transactions-type', [TransactionController::class, 'types']);
 Route::get('transactions-unit', [TransactionController::class, 'units']);
 Route::apiResource('return-orders', ReturnOrderController::class);
@@ -63,6 +64,7 @@ Route::apiResource('shipments', ShipmentController::class);
 Route::get("search-shipments", [ShipmentController::class, 'search']);
 Route::get("order-shipments", [ShipmentController::class, 'order']);
 Route::get('shipments-status', [ShipmentController::class,'status']);
+Route::get('shipment-latest', [ShipmentController::class,'getLatestShipment']);
 Route::get("newest-inventory-id", [InventoryController::class, 'newestInventoryId']);
 
 Route::get("search", [InventoryController::class, 'search']);

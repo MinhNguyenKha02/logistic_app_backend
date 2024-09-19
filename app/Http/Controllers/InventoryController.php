@@ -18,6 +18,9 @@ class InventoryController extends Controller
 {
 
 
+    public function getLatest(){
+        return \response("inventory", 200);
+    }
     /**
      * Display a listing of the resource.
      *
