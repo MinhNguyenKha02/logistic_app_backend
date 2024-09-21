@@ -6,12 +6,16 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "consoletvs/charts": "^6.7",
+        "doctrine/dbal": "^4.2",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.19",
-        "laravel/passport": "^12.2",
+        "laravel/passport": "^12.3",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
-        "pusher/pusher-php-server": "^7.2"
+        "pusher/pusher-php-server": "^7.2",
+        "spatie/browsershot": "^5.0",
+        "twig/twig": "^3.16"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.13",

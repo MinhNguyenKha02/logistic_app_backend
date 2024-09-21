@@ -31,7 +31,8 @@ class StoreReturnOrderRequest extends FormRequest
             'product_id'=>'required',
             'date'=>'required|date',
             'reason'=>'required',
-            'status'=>'required'
+            'status'=>'required',
+            'transaction_id'=>'required'
         ];
     }
     public function failedValidation(Validator $validator)

@@ -18,8 +18,19 @@ class ReturnOrder extends Model
         'product_id',
         'date',
         'reason',
-        'status'
+        'status',
+        'transaction_id',
     ];
+
+    public function transaction(){
+        return $this->belongsTo(Transaction::class, 'transaction_id', 'id');
+    }
+
+    public function shipments()
+    {
+        return $this->belongsToMany(Shipment::class, 'return_orders_shipments', 'return_order_id', 'shipment_id')
+            ->withTimestamps();
+    }
 
     public function customer(){
         return $this->belongsTo(User::class, 'customer_id', 'id');

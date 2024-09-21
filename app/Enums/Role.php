@@ -11,6 +11,8 @@ enum Role:string{
 
     case Supplier = 'supplier';
 
+    case Driver = 'driver';
+
     case Customer = 'customer';
 
 
