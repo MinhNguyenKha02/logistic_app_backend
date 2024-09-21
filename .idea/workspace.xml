@@ -4,15 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="772b42c3-5700-49ec-a05e-06f7a5e1747e" name="Changes" comment="">
+    <list default="true" id="772b42c3-5700-49ec-a05e-06f7a5e1747e" name="Changes" comment="improve: notification update sender, listener input&#10;feat: add breakdown shipment manually api&#10;feat: list of notifications, mark as read">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/c22b67ac-05bf-44b5-89cb-0cf661bc4555.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/c22b67ac-05bf-44b5-89cb-0cf661bc4555.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Enums/ReceiptStatus.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Enums/ReceiptStatus.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Enums/Status.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Enums/Status.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Enums/TransactionStatus.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Enums/TransactionStatus.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ConversationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ConversationController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/InventoryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/InventoryController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ReturnOrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ReturnOrderController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ShipmentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ShipmentController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TransactionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TransactionController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/EventServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/EventServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/UpdateShipmentRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/UpdateShipmentRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +31,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;MinhNguyenKha02&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/MinhNguyenKha02/logistic_app_backend.git&quot;,
+    &quot;accountId&quot;: &quot;783b14c3-ac2a-478f-8d5d-ed3eac8e735d&quot;
+  }
+}</component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="/bin/php">
     <include_path>
       <path value="$PROJECT_DIR$/vendor/doctrine/instantiator" />
@@ -108,7 +125,6 @@
       <path value="$PROJECT_DIR$/vendor/symfony/process" />
       <path value="$PROJECT_DIR$/vendor/sebastian/exporter" />
       <path value="$PROJECT_DIR$/vendor/nette/utils" />
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php72" />
       <path value="$PROJECT_DIR$/vendor/sebastian/resource-operations" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-normalizer" />
       <path value="$PROJECT_DIR$/vendor/sebastian/code-unit" />
@@ -159,6 +175,15 @@
       <path value="$PROJECT_DIR$/vendor/firebase/php-jwt" />
       <path value="$PROJECT_DIR$/vendor/pusher/pusher-php-server" />
       <path value="$PROJECT_DIR$/vendor/paragonie/sodium_compat" />
+      <path value="$PROJECT_DIR$/vendor/psr/cache" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/dbal" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/deprecations" />
+      <path value="$PROJECT_DIR$/vendor/twig/twig" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php81" />
+      <path value="$PROJECT_DIR$/vendor/balping/json-raw-encoder" />
+      <path value="$PROJECT_DIR$/vendor/consoletvs/charts" />
+      <path value="$PROJECT_DIR$/vendor/spatie/temporary-directory" />
+      <path value="$PROJECT_DIR$/vendor/spatie/browsershot" />
     </include_path>
   </component>
   <component name="ProjectColorInfo">{
@@ -172,16 +197,17 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
-    &quot;PHPUnit.Main.executor&quot;: &quot;Debug&quot;,
+    &quot;PHPUnit.Main.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/minh-nguyen/php_project/laravel-web-notifications&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/minh-nguyen/php_project/logistic-app&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -190,6 +216,11 @@
     ]
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="Main" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner configuration_file="$PROJECT_DIR$/phpunit.xml" scope="XML" use_alternative_configuration_file="true" />
@@ -199,8 +230,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-PS-242.21829.154" />
-        <option value="bundled-php-predefined-a98d8de5180a-4d9f4c849d09-com.jetbrains.php.sharedIndexes-PS-242.21829.154" />
+        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-PS-243.22562.164" />
+        <option value="bundled-php-predefined-a98d8de5180a-7980c7aaca61-com.jetbrains.php.sharedIndexes-PS-243.22562.164" />
       </set>
     </attachedChunks>
   </component>
@@ -247,10 +278,159 @@
       <workItem from="1726231570257" duration="1593000" />
       <workItem from="1726401527122" duration="1737000" />
       <workItem from="1726580833130" duration="4633000" />
+      <workItem from="1726934299723" duration="10195000" />
+      <workItem from="1727951136996" duration="3000" />
+      <workItem from="1729774046024" duration="2240000" />
+      <workItem from="1729910014217" duration="15910000" />
+      <workItem from="1730003794209" duration="6423000" />
+      <workItem from="1732422774534" duration="4274000" />
+      <workItem from="1732444260308" duration="2129000" />
+      <workItem from="1733031346358" duration="3798000" />
+      <workItem from="1733544738051" duration="31696000" />
+      <workItem from="1733912363002" duration="107000" />
+      <workItem from="1733915107548" duration="5944000" />
+      <workItem from="1734001110039" duration="599000" />
+      <workItem from="1734090378771" duration="4411000" />
+      <workItem from="1734096005407" duration="13988000" />
+      <workItem from="1734254462031" duration="4282000" />
+      <workItem from="1734369026818" duration="86000" />
+      <workItem from="1734407415929" duration="9601000" />
+      <workItem from="1734586738229" duration="5615000" />
+      <workItem from="1734696129420" duration="16762000" />
+      <workItem from="1735369943547" duration="26321000" />
+      <workItem from="1735533054957" duration="8474000" />
+      <workItem from="1735549647301" duration="2043000" />
+      <workItem from="1735571356778" duration="14155000" />
+      <workItem from="1735635992603" duration="3604000" />
+      <workItem from="1735641417906" duration="18676000" />
+      <workItem from="1735891460083" duration="22524000" />
+      <workItem from="1736083144015" duration="5329000" />
+      <workItem from="1736092977290" duration="126000" />
+      <workItem from="1736164319065" duration="333000" />
+      <workItem from="1736164941889" duration="2764000" />
+      <workItem from="1736219694706" duration="27385000" />
+      <workItem from="1736756034064" duration="7713000" />
+      <workItem from="1736822144177" duration="19585000" />
+      <workItem from="1736919633079" duration="18075000" />
+      <workItem from="1736993030561" duration="55000" />
+      <workItem from="1736993553969" duration="21904000" />
     </task>
+    <task id="LOCAL-00001" summary="chore: doing draft chat process">
+      <option name="closed" value="true" />
+      <created>1734696358027</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1734696358027</updated>
+    </task>
+    <task id="LOCAL-00002" summary="chore: doing draft chat process">
+      <option name="closed" value="true" />
+      <created>1734696448736</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1734696448736</updated>
+    </task>
+    <task id="LOCAL-00003" summary="draft: order processing">
+      <option name="closed" value="true" />
+      <created>1735562863471</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1735562863471</updated>
+    </task>
+    <task id="LOCAL-00004" summary="draft: db script">
+      <option name="closed" value="true" />
+      <created>1735563441152</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1735563441152</updated>
+    </task>
+    <task id="LOCAL-00005" summary="feat: chat realtime, payment, return order, mail send">
+      <option name="closed" value="true" />
+      <created>1735643025421</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1735643025421</updated>
+    </task>
+    <task id="LOCAL-00006" summary="feat: stats, return order, order of list. autofill inventory.">
+      <option name="closed" value="true" />
+      <created>1735806417197</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1735806417197</updated>
+    </task>
+    <task id="LOCAL-00007" summary="improve: return order, order, transaction, inventory realtime both match">
+      <option name="closed" value="true" />
+      <created>1736093039607</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1736093039607</updated>
+    </task>
+    <task id="LOCAL-00008" summary="draft: add even supply create">
+      <option name="closed" value="true" />
+      <created>1736093095036</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1736093095036</updated>
+    </task>
+    <task id="LOCAL-00009" summary="feat: statistic, fix some ignorable case">
+      <option name="closed" value="true" />
+      <created>1736333354568</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1736333354568</updated>
+    </task>
+    <task id="LOCAL-00010" summary="draft: add more 2 trash files">
+      <option name="closed" value="true" />
+      <created>1736333415408</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1736333415408</updated>
+    </task>
+    <task id="LOCAL-00011" summary="improve: notification update sender, listener input&#10;feat: add breakdown shipment manually api&#10;feat: list of notifications, mark as read">
+      <option name="closed" value="true" />
+      <created>1736940008109</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1736940008109</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="chore: doing draft chat process" />
+    <MESSAGE value="draft: order processing" />
+    <MESSAGE value="draft: db script" />
+    <MESSAGE value="feat: chat realtime, payment, return order, mail send" />
+    <MESSAGE value="feat: stats, return order, order of list. autofill inventory." />
+    <MESSAGE value="improve: return order, order, transaction, inventory realtime both match" />
+    <MESSAGE value="draft: add even supply create" />
+    <MESSAGE value="feat: statistic, fix some ignorable case" />
+    <MESSAGE value="draft: add more 2 trash files" />
+    <MESSAGE value="improve: notification update sender, listener input&#10;feat: add breakdown shipment manually api&#10;feat: list of notifications, mark as read" />
+    <option name="LAST_COMMIT_MESSAGE" value="improve: notification update sender, listener input&#10;feat: add breakdown shipment manually api&#10;feat: list of notifications, mark as read" />
   </component>
 </project>

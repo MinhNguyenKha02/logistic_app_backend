@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -40,10 +41,10 @@ class Kernel extends HttpKernel
 
         'api' => [
             \Illuminate\Session\Middleware\StartSession::class,
+            \App\Http\Middleware\UpdateLastActive::class,
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-
         ],
     ];
 
@@ -66,4 +67,10 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
     ];
+
+
+    protected function schedule(Schedule $schedule)
+    {
+        $schedule->command('users:mark-inactive')->everyMinute();
+    }
 }

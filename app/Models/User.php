@@ -25,8 +25,11 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'last_active_at',
+        'is_active'
     ];
-
+    protected $guarded = [];
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -48,6 +51,28 @@ class User extends Authenticatable
     ];
 
     protected $keyType = 'string';
+
+    public static function newestInventoryId(){
+        $lastUser = User::all();
+
+        Log::info(count($lastUser));
+        if (count($lastUser) == 0) {
+            $id = "U0";
+        } else{
+            $lastUser = User::latest()->first();
+            $id = $lastUser["id"];
+        }
+        $pattern = "/\d+/";
+        $match="";
+        if(preg_match($pattern, $id, $match)){
+            Log::info($match);
+            $number = (int)$match[0]+1;
+            Log::info("before replace".$id.", ".$number.", ".$match[0]);
+            $id=str_replace($match[0],(string)$number,$id);
+            Log::info("replaced".$id.", ".$number.", ".$match[0]);
+            return $id;
+        }
+    }
 
     public function orders()
     {

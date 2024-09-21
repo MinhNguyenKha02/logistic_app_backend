@@ -28,7 +28,6 @@ class UpdateUserRequest extends FormRequest
         return [
             "name"=>"required",
             "email"=>"required|email",
-            "password"=>"required",
         ];
     }
     public function failedValidation(Validator $validator)

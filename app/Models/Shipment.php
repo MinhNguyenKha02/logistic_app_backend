@@ -37,6 +37,12 @@ class Shipment extends Model
         return $this->belongsToMany(Order::class, 'orders_shipments', 'shipment_id', 'order_id')
             ->withTimestamps();
     }
+    public function return_orders(){
+        return $this->belongsToMany(ReturnOrder::class, 'return_orders_shipments', 'shipment_id', 'return_order_id')
+            ->withTimestamps();
+    }
+
+
     public static function newestShipmentId()
     {
         $id = "";

@@ -28,10 +28,9 @@ class StoreShipmentRequest extends FormRequest
         $rules = [];
         $fields = array_keys($this->all());
         foreach ($fields as $field) {
-            $rules[$field] = "required";
-//            if($field == 'id'){
-//                $rules[$field] = 'required|unique:shipments,id';
-//            }
+            if($field != 'vehicle_id'){
+                $rules[$field] = "required";
+            }
         }
         return $rules;
     }

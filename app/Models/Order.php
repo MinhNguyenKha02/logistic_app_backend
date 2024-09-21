@@ -26,6 +26,10 @@ class Order extends Model
         'status' => Status::class
     ];
 
+    public function receipt(){
+        return $this->hasOne(Receipt::class, 'order_id', 'id');
+    }
+
     public function orderDetail()
     {
         return $this->hasOne(OrderDetail::class, 'order_id', 'id');
@@ -42,7 +46,7 @@ class Order extends Model
     }
 
     public function shipments(){
-        return $this->belongsToMany(Shipment::class, 'orders_shipments', 'order_id', 'shipment_id');
+        return $this->belongsToMany(Shipment::class, 'orders_shipments', 'order_id', 'shipment_id')->orderBy('created_at', 'asc');
     }
     public static function newestOrderId(){
         $lastOrder = Order::all();

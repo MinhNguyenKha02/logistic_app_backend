@@ -8,10 +8,29 @@ use App\Enums\Unit;
 use App\Http\Requests\StoreTransactionRequest;
 use App\Http\Requests\UpdateTransactionRequest;
 use App\Models\Transaction;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
+    public function search(Request $request){
+        $keyword = $request['keyword'];
+        $transaction = Transaction::query()->where("id", "like", "%$keyword%")
+            ->orWhere("product_id", "like", "%$keyword%")
+            ->orWhere("unit", "like", "%$keyword%")
+            ->orWhere("type", "like", "%$keyword%")
+            ->orwhere("quantity", "like", "%$keyword%")
+            ->orWhere("date", "like", "%$keyword%")
+            ->orWhere("status", "like", "%$keyword%")
+            ->orWhere("created_at", "like", "%$keyword%")
+            ->orWhere("updated_at", "like", "%$keyword%")
+            ->orWhereHas('product', function ($query) use ($keyword) {
+                $query->where('name', 'like', "%$keyword%");
+            })
+            ->paginate(3);
+        if($transaction){
+            return response(["transactions"=>$transaction], 200);
+        }
+    }
     public function units()
     {
         return response(["units"=>Unit::cases()], 200);
@@ -27,9 +46,21 @@ class TransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return response(['transactions'=>Transaction::all()], 200);
+        $directions = ["asc", "desc"];
+        $type = $request['type'];
+        $direction = $request['direction'];
+        if($direction==""||!$direction){
+            $transaction = Transaction::query()->paginate(3);
+            return response(["transactions"=>$transaction], 200);
+        }else{
+            $transaction = Transaction::query()->orderBy($type, $direction)->paginate(3);
+
+            return response([
+                "transactions" => $transaction
+            ], 200);
+        }
     }
 
     /**
@@ -41,7 +72,7 @@ class TransactionController extends Controller
     public function store(StoreTransactionRequest $request)
     {
         $validatedData = $request->validated();
-        $validatedData['id'] = Transaction::newestTransactionId();
+        $validatedData['id'] = fake()->uuid();
         Transaction::create($validatedData);
         $transactions = Transaction::find($validatedData['id']);
         return response(["message"=>"Transaction is created",'transaction'=>$transactions],201);

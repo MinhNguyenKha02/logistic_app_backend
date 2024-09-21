@@ -29,7 +29,7 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request)
     {
         $validatedData = $request->validated();
-        $validatedData["id"] = Product::newestProductId();
+        $validatedData["id"] = fake()->uuid();
         Product::create($validatedData);
         $product = Product::find($validatedData['id']);
         return response(["message"=>"Product is created !", "product"=>$product], 201);

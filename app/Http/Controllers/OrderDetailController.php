@@ -28,7 +28,7 @@ class OrderDetailController extends Controller
     public function store(StoreOrderDetailRequest $request)
     {
         $validatedData = $request->validated();
-        $validatedData["id"] = OrderDetail::newestOrderDetailId();
+        $validatedData["id"] = fake()->uuid();
         $order_id = $validatedData['order_id'];
         $order = Order::find($order_id);
         if(!$order->orderDetail){

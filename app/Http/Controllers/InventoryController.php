@@ -7,8 +7,10 @@ use App\Http\Requests\StoreInventoryRequest;
 use App\Http\Requests\UpdateInventoryRequest;
 use App\Models\Inventory;
 use App\Models\Warehouse;
+use App\Notifications\MessageOrderSampleNotification;
 use http\Env\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use App\Enums\Unit;
@@ -52,9 +54,15 @@ class InventoryController extends Controller
                                         ->orwhere("quantity", "like", "%$keyword%")
                                         ->orwhere("unit", "like", "%$keyword%")
                                         ->orWhere("id", "like", "%$keyword%")
+                                        ->orWhereHas('warehouse', function ($query) use ($keyword) {
+                                            $query->where('name', 'like', "%$keyword%");
+                                        })
+                                        ->orWhereHas('product', function ($query) use ($keyword) {
+                                            $query->where('name', 'like', "%$keyword%");
+                                        })
                                         ->paginate(3);
         if($inventory){
-            return response($inventory, 200);
+            return response(["inventories"=>$inventory], 200);
         }
     }
 
@@ -79,7 +87,7 @@ class InventoryController extends Controller
     public function store(StoreInventoryRequest $request)
     {
         $validatedData = $request->validated();
-        $validatedData["id"] = Inventory::newestInventoryId();
+        $validatedData["id"] = fake()->uuid();
         Inventory::create($validatedData);
 
         $inventory = Inventory::find($validatedData['id']);
@@ -121,6 +129,7 @@ class InventoryController extends Controller
      */
     public function destroy(Inventory $inventory)
     {
+        $inventory->product->delete();
         $inventory->delete();
         return response(["message"=>"Inventory is deleted"],204);
     }
