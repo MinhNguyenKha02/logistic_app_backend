@@ -173,7 +173,7 @@ class ReturnOrderController extends Controller
             $latestOrder = ReturnOrder::query()->where("customer_id", $validatedData['user_id'])->orderBy('updated_at', 'desc')->first();
             return response([
                 "order"=>$latestOrder,
-                "shipments"=>$latestOrder->shipments,
+                "shipments"=>$latestOrder->shipments()->orderBy('return_orders_shipments.created_at', 'asc')->get(),
                 "transaction"=>$latestOrder->transaction,
                 "product"=>$latestOrder->product,
                 "category"=>$latestOrder->product->category
@@ -190,7 +190,7 @@ class ReturnOrderController extends Controller
         $order = ReturnOrder::query()->where("id", $validatedData["return_order_id"])->first();
         return response([
             "return_order"=>$order,
-            "shipments"=>$order->shipments,
+            "shipments"=>$order->shipments()->orderBy('return_orders_shipments.created_at', 'asc')->get(),
             "transaction"=>$order->transaction,
             "product"=>$order->product,
             "category"=>$order->product->category

@@ -36,7 +36,7 @@ class Inventory extends Model
 
             if ($inventory->quantity < $threshold) {
                 $inventory->quantity += $refillAmount;
-                Auth::guard("api")->user()->notify(new MessageRefillInventoryNotification());
+                Auth::guard("api")->user()->notify(new MessageRefillInventoryNotification(Auth::guard("api")->user(),Auth::guard("api")->user()));
                 $data = [
                     "id"=>fake()->uuid,
                     'product_id' => $inventory->product_id,
@@ -56,7 +56,7 @@ class Inventory extends Model
 
             if ($inventory->quantity < $threshold) {
                 $inventory->quantity += $refillAmount;
-                Auth::guard("api")->user()->notify(new MessageRefillInventoryNotification());
+                Auth::guard("api")->user()->notify(new MessageRefillInventoryNotification(Auth::guard("api")->user(),Auth::guard("api")->user()));
                 $data = [
                     "id"=>fake()->uuid,
                     'product_id' => $inventory->product_id,

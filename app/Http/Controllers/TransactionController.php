@@ -7,6 +7,7 @@ use App\Enums\TransactionType;
 use App\Enums\Unit;
 use App\Http\Requests\StoreTransactionRequest;
 use App\Http\Requests\UpdateTransactionRequest;
+use App\Models\Inventory;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 
@@ -75,6 +76,11 @@ class TransactionController extends Controller
         $validatedData['id'] = fake()->uuid();
         Transaction::create($validatedData);
         $transactions = Transaction::find($validatedData['id']);
+        $inventory = Inventory::query()->where('id',$transactions->product->inventory->id)->first();
+        if ($inventory) {
+            $inventory->update(['quantity' => (int) $inventory->quantity + (int) $validatedData['quantity']]);
+            $inventory->save();
+        }
         return response(["message"=>"Transaction is created",'transaction'=>$transactions],201);
     }
 
@@ -105,6 +111,14 @@ class TransactionController extends Controller
     public function update(UpdateTransactionRequest $request, Transaction $transaction)
     {
         $validatedData = $request->validated();
+        if(isset($validatedData['quantity'])){
+            $inventory = Inventory::query()->where('id',$transaction->product->inventory->id)->first();
+            if ($inventory) {
+                $inventory->update(['quantity'=>(int) $transaction->product->inventory->quantity - (int) $transaction->quantity]);
+                $inventory->update(['quantity'=> (int) $transaction->product->inventory->quantity+ (int) $validatedData['quantity']]);
+                $inventory->save();
+            }
+        }
         $transaction->update($validatedData);
         return response(['transaction'=>$transaction], 200);
     }

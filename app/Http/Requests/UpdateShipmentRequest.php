@@ -30,9 +30,7 @@ class UpdateShipmentRequest extends FormRequest
         foreach ($fields as $field) {
             $rules[$field] = "required";
         }
-        $rules=[
-            'origin_address_breakdown'=>'nullable|string',
-        ];
+        $rules['origin_address_breakdown']='nullable|string';
         return $rules;
     }
 

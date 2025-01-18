@@ -39,7 +39,7 @@ class Product extends Model
 
     public function inventory():HasOne
     {
-        return $this->hasOne(Inventory::class, 'product_id', 'id');
+        return $this->hasOne(Inventory::class);
     }
     public function transactions(){
         return $this->hasMany(Transaction::class, 'product_id', 'id');

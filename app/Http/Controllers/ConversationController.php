@@ -42,7 +42,7 @@ class ConversationController extends Controller
         $notifications = DB::table('notifications')
             ->select('id', 'data', 'created_at','updated_at','read_at')
             ->where('notifiable_id', Auth::guard("api")->user()->id)
-            ->orderBy('updated_at', 'desc')
+            ->orderBy('created_at', 'desc')
             ->get();
         return response(["notifications"=>$notifications],200);
     }

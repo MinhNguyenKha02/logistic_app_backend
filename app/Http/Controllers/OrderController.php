@@ -20,6 +20,7 @@ use App\Notifications\MessageOrderNotification;
 use App\Notifications\MessageOrderSampleNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -94,7 +95,7 @@ class OrderController extends Controller
         return response([
             "receipt"=> $order->receipt,
             "order"=>$order,
-            "shipments"=>$order->shipments,
+            "shipments"=>$order->shipments()->orderBy('orders_shipments.created_at', 'asc')->get(),
             "transaction"=>$order->transaction,
             "product"=>$order->product,
             "category"=>$order->product->category
@@ -117,7 +118,7 @@ class OrderController extends Controller
                 ->whereIn('shipment_id', $shipmentIds)
                 ->orderBy('created_at', 'desc')
                 ->value('order_id');
-            $shipments = Shipment::query()->whereIn("id", $shipmentIds)->get();
+            $shipments = Shipment::query()->whereIn("id", $shipmentIds)->orderBy('created_at', 'asc')->get();
             $latestOrder = Order::query()->where("id", $latestOrderId)->first();
 
             $receipt = Receipt::query()->where("order_id", $latestOrder->id)->orderBy("created_at", "desc")->first();
@@ -134,7 +135,7 @@ class OrderController extends Controller
             return response([
                 "receipt"=> $latestOrder->receipt,
                 "order"=>$latestOrder,
-                "shipments"=>$latestOrder->shipments,
+                "shipments"=>$latestOrder->shipments()->orderBy('orders_shipments.created_at', 'asc')->get(),
                 "transaction"=>$latestOrder->transaction,
                 "product"=>$latestOrder->product,
                 "category"=>$latestOrder->product->category
@@ -223,7 +224,14 @@ class OrderController extends Controller
                 break;
             }
         }
-        if($is_breakdown) return response(["order"=>$order, "shipment"=>$order->shipments[$_index]], 200);
+        if($is_breakdown) {
+            $value=Cache::get("origin_address_breakdown", "");
+            if($value!="") {
+                $order->shipments[$_index]['origin_address'] = $value;
+                Cache::forget("origin_address_breakdown");
+            }
+            return response(["order" => $order, "shipment" => $order->shipments[$_index]], 200);
+        }
         else return response(["message"=>"Order is not breakdown"], 204);
     }
 

@@ -17,7 +17,7 @@ class MessageRefillInventoryNotification extends Notification
     public $listener;
     public function __construct($sender, $listener)
     {
-        $this->message="Your inventory is refilled.";
+        $this->message="An inventory is refilled.";
         $this->sender=$sender;
         $this->listener=$listener;
     }

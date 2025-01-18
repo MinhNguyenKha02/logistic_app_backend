@@ -40,6 +40,12 @@ class ShipmentController extends Controller
             ->orWhereHas('vehicle.carrier', function ($query) use ($keyword) {
                 $query->where('name', 'like', "%$keyword%");
             })
+            ->orWhereHas("orders", function ($query) use ($keyword) {
+                $query->where('orders.id', 'like', "%$keyword%");
+            })
+            ->orWhereHas("return_orders", function ($query) use ($keyword) {
+                $query->where('return_orders.id', 'like', "%$keyword%");
+            })
             ->paginate(3);
         if($shipment){
             return response(["shipments"=>$shipment], 200);
@@ -90,9 +96,10 @@ class ShipmentController extends Controller
         broadcast(new changeOrder())->toOthers();
         broadcast(new changeReturnOrder())->toOthers();
         foreach ($orders as $order) {
-            $order->customer->notify(new MessageOrderSampleNotification("Your order is ".!$is_order ? "returned" : $validatedData['status'], Auth::guard('api')->user(), $order->customer));
+            $message = "Your order is " . (!$is_order ? "returned" : $validatedData['status']);
+            $order->customer->notify(new MessageOrderSampleNotification($message, Auth::guard('api')->user(), $order->customer));
         }
-        $shipment->vehicle->carrier->notify(new MessageShipmentNotification("success"), Auth::guard('api')->user(), $shipment->vehicle->carrier);
+        $shipment->vehicle->carrier->notify(new MessageShipmentNotification("success", Auth::guard('api')->user(), $shipment->vehicle->carrier));
         return response(["message"=>"update successfully"],200);
     }
 
@@ -146,10 +153,10 @@ class ShipmentController extends Controller
         $order = Order::query()->where('id', $validatedData['order_id'])->first();
         if(!$order)
             $order = ReturnOrder::query()->where('id', $validatedData['order_id'])->first();
+        Log::info($order. "\n".$order->customer."\n".$order->shipments[0]->vehicle->carrier);
         broadcast(new breakDown($order->id, $order->shipments[0], $validatedData['origin']))->toOthers();
         $order->customer->notify(new MessageOrderSampleNotification("Your order is breakdown", Auth::guard('api')->user(), $order->customer));
         $order->shipments[0]->vehicle->carrier->notify(new MessageOrderSampleNotification("Your currently order is breakdown", Auth::guard('api')->user(), $order->shipments[0]->vehicle->carrier));
-        Log::info("carrier ".$order->shipments[0]->vehicle->carrier." customer ".$order->customer);
         return response()->json([
             'message'=>'Notify'
         ], 200);
@@ -236,11 +243,6 @@ class ShipmentController extends Controller
      */
     public function show(Shipment $shipment)
     {
-        $value=Cache::get("origin_address_breakdown", "");
-        if($value!="") {
-            $shipment['origin_address'] = $value;
-            Cache::forget("origin_address_breakdown");
-        }
         return response(["shipment"=>$shipment->load("orders")], 200);
     }
 
@@ -257,7 +259,7 @@ class ShipmentController extends Controller
         $shipment->update($validated);
         if (isset($validated['vehicle_id']) && $validated['vehicle_id'] !== "")
             $shipment->vehicle->carrier->notify(new MessageShipmentNotification($validated['status'], Auth::guard("api")->user(), $shipment->vehicle->carrier));
-        if(isset($validated['origin_address_breakdown'])){
+        if(isset($validated['origin_address_breakdown']) && $validated['origin_address_breakdown'] !==""){
             Cache::put("origin_address_breakdown", $validated['origin_address_breakdown']);
         }
         return response(["message"=>"Shipment is updated", "shipment"=>$shipment], 200);

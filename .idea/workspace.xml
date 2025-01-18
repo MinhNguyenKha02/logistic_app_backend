@@ -5,19 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="772b42c3-5700-49ec-a05e-06f7a5e1747e" name="Changes" comment="improve: notification update sender, listener input&#10;feat: add breakdown shipment manually api&#10;feat: list of notifications, mark as read">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/c22b67ac-05bf-44b5-89cb-0cf661bc4555.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/c22b67ac-05bf-44b5-89cb-0cf661bc4555.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Enums/ReceiptStatus.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Enums/ReceiptStatus.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Enums/Status.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Enums/Status.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Enums/TransactionStatus.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Enums/TransactionStatus.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ConversationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ConversationController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/InventoryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/InventoryController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ReturnOrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ReturnOrderController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ShipmentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ShipmentController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TransactionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TransactionController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Requests/UpdateShipmentRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/UpdateShipmentRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Inventory.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Inventory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Product.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Product.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Notifications/MessageRefillInventoryNotification.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Notifications/MessageRefillInventoryNotification.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -314,6 +312,7 @@
       <workItem from="1736919633079" duration="18075000" />
       <workItem from="1736993030561" duration="55000" />
       <workItem from="1736993553969" duration="21904000" />
+      <workItem from="1737105389647" duration="22733000" />
     </task>
     <task id="LOCAL-00001" summary="chore: doing draft chat process">
       <option name="closed" value="true" />
