@@ -11,6 +11,7 @@ use App\Events\createOrder;
 use App\Events\latestOrder;
 use App\Http\Requests\StoreShipmentRequest;
 use App\Http\Requests\UpdateShipmentRequest;
+use App\Models\Inventory;
 use App\Models\Order;
 use App\Models\ReturnOrder;
 use App\Models\Shipment;
@@ -20,6 +21,7 @@ use App\Notifications\MessageShipmentNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class ShipmentController extends Controller
@@ -46,6 +48,8 @@ class ShipmentController extends Controller
             ->orWhereHas("return_orders", function ($query) use ($keyword) {
                 $query->where('return_orders.id', 'like', "%$keyword%");
             })
+            ->orWhere(DB::raw("DATE(created_at)"), '=', $keyword)
+            ->orWhere(DB::raw("DATE(updated_at)"), '=', $keyword)
             ->paginate(3);
         if($shipment){
             return response(["shipments"=>$shipment], 200);
@@ -84,11 +88,19 @@ class ShipmentController extends Controller
         }
         if(!$is_order){
             foreach ($orders as $order) {
+                $inventory = Inventory::query()->where("id", $order->product->inventory->id)->first();
+                Log::info($inventory);
+                $inventory?->update(['quantity' => $inventory->quantity - $order->transaction->quantity]);
+                $inventory->save();
                 $order->update(["status"=>"returned"]);
                 $order->transaction->update(["status"=>"returned"]);
             }
         }else{
             foreach ($orders as $order) {
+                $inventory = Inventory::query()->where("id", $order->product->inventory->id)->first();
+                Log::info($inventory);
+                $inventory?->update(['quantity' => $inventory->quantity - $order->transaction->quantity]);
+                $inventory->save();
                 $order->update($validatedData);
                 $order->transaction->update($validatedData);
             }

@@ -42,6 +42,8 @@ class OrderController extends Controller
             ->orWhereHas('customer', function ($query) use ($keyword) {
                 $query->where('name', 'like', "%$keyword%");
             })
+            ->orWhere(DB::raw("DATE(created_at)"), '=', $keyword)
+            ->orWhere(DB::raw("DATE(updated_at)"), '=', $keyword)
             ->paginate(3);
         if($shipment){
             return response(["orders"=>$shipment], 200);

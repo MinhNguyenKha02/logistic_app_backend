@@ -4,18 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="772b42c3-5700-49ec-a05e-06f7a5e1747e" name="Changes" comment="improve: notification update sender, listener input&#10;feat: add breakdown shipment manually api&#10;feat: list of notifications, mark as read">
+    <list default="true" id="772b42c3-5700-49ec-a05e-06f7a5e1747e" name="Changes" comment="fix: update inventory when transaction create &#10;fix: sort shipments which belong to each order&#10;feat: search order, return order on each shipment record which is belongs to&#10;feat: get origin_breakdown_address to origin_address whenever stored in cache when fire a breakdown api">
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ConversationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ConversationController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ReturnOrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ReturnOrderController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ShipmentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ShipmentController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TransactionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TransactionController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/UpdateShipmentRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/UpdateShipmentRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Inventory.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Inventory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Product.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Product.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Notifications/MessageRefillInventoryNotification.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Notifications/MessageRefillInventoryNotification.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -228,8 +223,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-PS-243.22562.164" />
-        <option value="bundled-php-predefined-a98d8de5180a-7980c7aaca61-com.jetbrains.php.sharedIndexes-PS-243.22562.164" />
+        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-PS-243.23654.115" />
+        <option value="bundled-php-predefined-a98d8de5180a-4c3855d0ab16-com.jetbrains.php.sharedIndexes-PS-243.23654.115" />
       </set>
     </attachedChunks>
   </component>
@@ -312,7 +307,8 @@
       <workItem from="1736919633079" duration="18075000" />
       <workItem from="1736993030561" duration="55000" />
       <workItem from="1736993553969" duration="21904000" />
-      <workItem from="1737105389647" duration="22733000" />
+      <workItem from="1737105389647" duration="33931000" />
+      <workItem from="1737289634424" duration="4943000" />
     </task>
     <task id="LOCAL-00001" summary="chore: doing draft chat process">
       <option name="closed" value="true" />
@@ -402,7 +398,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736940008109</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="fix: update inventory when transaction create &#10;fix: sort shipments which belong to each order&#10;feat: search order, return order on each shipment record which is belongs to&#10;feat: get origin_breakdown_address to origin_address whenever stored in cache when fire a breakdown api">
+      <option name="closed" value="true" />
+      <created>1737207638790</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1737207638790</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -430,6 +434,7 @@
     <MESSAGE value="feat: statistic, fix some ignorable case" />
     <MESSAGE value="draft: add more 2 trash files" />
     <MESSAGE value="improve: notification update sender, listener input&#10;feat: add breakdown shipment manually api&#10;feat: list of notifications, mark as read" />
-    <option name="LAST_COMMIT_MESSAGE" value="improve: notification update sender, listener input&#10;feat: add breakdown shipment manually api&#10;feat: list of notifications, mark as read" />
+    <MESSAGE value="fix: update inventory when transaction create &#10;fix: sort shipments which belong to each order&#10;feat: search order, return order on each shipment record which is belongs to&#10;feat: get origin_breakdown_address to origin_address whenever stored in cache when fire a breakdown api" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: update inventory when transaction create &#10;fix: sort shipments which belong to each order&#10;feat: search order, return order on each shipment record which is belongs to&#10;feat: get origin_breakdown_address to origin_address whenever stored in cache when fire a breakdown api" />
   </component>
 </project>

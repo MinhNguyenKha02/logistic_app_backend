@@ -11,6 +11,7 @@ use App\Notifications\MessageOrderSampleNotification;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use App\Enums\Unit;
@@ -60,6 +61,8 @@ class InventoryController extends Controller
                                         ->orWhereHas('product', function ($query) use ($keyword) {
                                             $query->where('name', 'like', "%$keyword%");
                                         })
+                                        ->orWhere(DB::raw("DATE(created_at)"), '=', $keyword)
+                                        ->orWhere(DB::raw("DATE(updated_at)"), '=', $keyword)
                                         ->paginate(3);
         if($inventory){
             return response(["inventories"=>$inventory], 200);

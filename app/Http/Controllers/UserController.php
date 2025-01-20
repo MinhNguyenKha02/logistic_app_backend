@@ -12,6 +12,7 @@ use Barryvdh\Debugbar\Twig\Extension\Debug;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -50,6 +51,8 @@ class UserController extends Controller
             ->orWhere("name", "like", "%$keyword%")
             ->orwhere("role", "like", "%$keyword%")
             ->orWhere("email", "like", "%$keyword%")
+            ->orWhere(DB::raw("DATE(created_at)"), '=', $keyword)
+            ->orWhere(DB::raw("DATE(updated_at)"), '=', $keyword)
             ->paginate(3);
         if($user){
             return response(["users"=>$user], 200);

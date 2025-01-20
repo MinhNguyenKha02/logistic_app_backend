@@ -10,6 +10,7 @@ use App\Http\Requests\UpdateTransactionRequest;
 use App\Models\Inventory;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TransactionController extends Controller
 {
@@ -27,6 +28,8 @@ class TransactionController extends Controller
             ->orWhereHas('product', function ($query) use ($keyword) {
                 $query->where('name', 'like', "%$keyword%");
             })
+            ->orWhere(DB::raw("DATE(created_at)"), '=', $keyword)
+            ->orWhere(DB::raw("DATE(updated_at)"), '=', $keyword)
             ->paginate(3);
         if($transaction){
             return response(["transactions"=>$transaction], 200);
