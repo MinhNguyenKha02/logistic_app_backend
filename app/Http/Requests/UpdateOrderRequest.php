@@ -36,7 +36,6 @@ class UpdateOrderRequest extends FormRequest
             return [
 //                'id'=>'required',
                 'customer_id'=>'required',
-                'product_id'=>'required',
                 'date'=>'required|date',
                 'transaction_id'=>'required',
                 'status'=>'required'

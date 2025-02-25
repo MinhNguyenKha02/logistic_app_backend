@@ -28,7 +28,6 @@ class StoreReturnOrderRequest extends FormRequest
         return [
 //            'id'=>'required|unique:return_orders,id',
             'customer_id'=>'required',
-            'product_id'=>'required',
             'date'=>'required|date',
             'reason'=>'required',
             'status'=>'required',

@@ -32,13 +32,9 @@ class OrderController extends Controller
 
         $shipment = Order::query()->where('id', "like", "%$keyword%")
             ->orWhere('customer_id', "like", "%$keyword%")
-            ->orwhere("product_id", "like", "%$keyword%")
             ->orwhere("date", "like", "%$keyword%")
             ->orWhere("transaction_id", "like", "%$keyword%")
             ->orWhere("status", "like", "%$keyword%")
-            ->orWhereHas('product', function ($query) use ($keyword) {
-                $query->where('name', 'like', "%$keyword%");
-            })
             ->orWhereHas('customer', function ($query) use ($keyword) {
                 $query->where('name', 'like', "%$keyword%");
             })
@@ -99,8 +95,8 @@ class OrderController extends Controller
             "order"=>$order,
             "shipments"=>$order->shipments()->orderBy('orders_shipments.created_at', 'asc')->get(),
             "transaction"=>$order->transaction,
-            "product"=>$order->product,
-            "category"=>$order->product->category
+            "product"=>$order->transaction->product,
+            "category"=>$order->transaction->product->category
         ], 200);
     }
 
@@ -129,8 +125,7 @@ class OrderController extends Controller
                 "order"=>$latestOrder,
                 "shipments"=>[$shipments],
                 "transaction"=>$latestOrder->transaction,
-                "product"=>$latestOrder->product,
-                "category"=>$latestOrder->product->category
+                "category"=>$latestOrder->transaction->product->category
             ], 200, [], JSON_UNESCAPED_UNICODE);
         }else {
             $latestOrder = Order::query()->where("customer_id", $validatedData['user_id'])->orderBy('updated_at', 'desc')->first();
@@ -139,8 +134,7 @@ class OrderController extends Controller
                 "order"=>$latestOrder,
                 "shipments"=>$latestOrder->shipments()->orderBy('orders_shipments.created_at', 'asc')->get(),
                 "transaction"=>$latestOrder->transaction,
-                "product"=>$latestOrder->product,
-                "category"=>$latestOrder->product->category
+                "category"=>$latestOrder->transaction->product->category
             ], 200);
         }
     }

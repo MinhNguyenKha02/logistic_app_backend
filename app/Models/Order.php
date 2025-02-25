@@ -16,10 +16,11 @@ class Order extends Model
     protected $fillable = [
         'id',
         'customer_id',
-        'product_id',
         'date',
         'transaction_id',
-        'status'
+        'status',
+        'note',
+        'order_failed_times'
     ];
 
     protected $casts = [
@@ -37,9 +38,6 @@ class Order extends Model
 
     public function customer(){
         return $this->belongsTo(User::class, 'customer_id', 'id');
-    }
-    public function product(){
-        return $this->belongsTo(Product::class, 'product_id', 'id');
     }
     public function transaction(){
         return $this->belongsTo(Transaction::class, 'transaction_id', 'id');

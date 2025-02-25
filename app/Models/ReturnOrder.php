@@ -15,7 +15,6 @@ class ReturnOrder extends Model
     protected $fillable = [
         'id',
         'customer_id',
-        'product_id',
         'date',
         'reason',
         'status',
@@ -34,9 +33,6 @@ class ReturnOrder extends Model
 
     public function customer(){
         return $this->belongsTo(User::class, 'customer_id', 'id');
-    }
-    public function product(){
-        return $this->belongsTo(Product::class, 'product_id', 'id');
     }
     public static function newestReturnOrderId(){
         $lastReturnOrder = ReturnOrder::all();

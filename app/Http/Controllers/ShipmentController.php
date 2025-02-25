@@ -79,8 +79,10 @@ class ShipmentController extends Controller
         $is_order=true;
         $validatedData = $request->validate([
             'status' => 'required',
+            'note'=>'nullable',
         ]);
-        $shipment->update(["status"=>"success"]);
+        $shipmentStatus = $validatedData['status']==='delivered' ? "success" : ($validatedData['status']==='undelivered' ? "failed" : $validatedData['status']);
+        $shipment->update(["status"=>$shipmentStatus]);
         $orders = $shipment->orders;
         if (!$orders || $orders->isEmpty()) {
             $is_order=false;
@@ -88,31 +90,48 @@ class ShipmentController extends Controller
         }
         if(!$is_order){
             foreach ($orders as $order) {
-                $inventory = Inventory::query()->where("id", $order->product->inventory->id)->first();
+                $inventory = Inventory::query()->where("id", $order->transaction->product->inventory->id)->first();
                 Log::info($inventory);
                 $inventory?->update(['quantity' => $inventory->quantity - $order->transaction->quantity]);
                 $inventory->save();
                 $order->update(["status"=>"returned"]);
-                $order->transaction->update(["status"=>"returned"]);
+                $order->transaction->update(["status"=>"success"]);
             }
+            broadcast(new changeOrder())->toOthers();
+
         }else{
             foreach ($orders as $order) {
-                $inventory = Inventory::query()->where("id", $order->product->inventory->id)->first();
-                Log::info($inventory);
-                $inventory?->update(['quantity' => $inventory->quantity - $order->transaction->quantity]);
-                $inventory->save();
+                if($validatedData['status']=="delivered"){
+                    $inventory = Inventory::query()->where("id", $order->transaction->product->inventory->id)->first();
+                    Log::info($inventory);
+                    $inventory?->update(['quantity' => $inventory->quantity - $order->transaction->quantity]);
+                    $inventory->save();
+                }
                 $order->update($validatedData);
-                $order->transaction->update($validatedData);
+                $order->transaction->update([$validatedData['status']]);
+            }
+            broadcast(new changeReturnOrder())->toOthers();
+        }
+        if($validatedData['status']==='undelivered'){
+            foreach ($orders as $order) {
+                $order->order_failed_times++;
+                $order->save();
+
+                if($order->order_failed_times>=3){
+                    $order->update(["status"=>"cancelled"]);
+                    $order->transaction->update(["status"=>"failed"]);
+                    $message = "You order is cancelled";
+                    $order->customer->notify(new MessageOrderSampleNotification($message, Auth::guard('api')->user(), $order->customer));
+                }
             }
         }
-        broadcast(new changeOrder())->toOthers();
-        broadcast(new changeReturnOrder())->toOthers();
+
         foreach ($orders as $order) {
-            $message = "Your order is " . (!$is_order ? "returned" : $validatedData['status']);
+            $message = "You". (!$is_order?" return":"")." order is " . (!$is_order ? "returned" : $validatedData['status']);
             $order->customer->notify(new MessageOrderSampleNotification($message, Auth::guard('api')->user(), $order->customer));
         }
-        $shipment->vehicle->carrier->notify(new MessageShipmentNotification("success", Auth::guard('api')->user(), $shipment->vehicle->carrier));
-        return response(["message"=>"update successfully"],200);
+        $shipment->vehicle->carrier->notify(new MessageShipmentNotification( $shipmentStatus, Auth::guard('api')->user(), $shipment->vehicle->carrier));
+        return response(["message"=>"update successfully", $validatedData],200);
     }
 
     public function addBreakDownShipment(Request $request)
@@ -297,6 +316,8 @@ class ShipmentController extends Controller
                 });
 
                 $relatedShipments->each->delete();
+                $order->delete();
+                Order::find($order->id)->delete();
             }
         }
 
@@ -312,6 +333,8 @@ class ShipmentController extends Controller
                 });
 
                 $relatedShipments->each->delete();
+                $order->delete();
+                ReturnOrder::find($order->id)->delete();
             }
         }
 

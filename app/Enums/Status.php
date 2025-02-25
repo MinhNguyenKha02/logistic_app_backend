@@ -12,6 +12,7 @@ enum Status:string {
 
     case Processing = "processing";
     case Delivered = 'delivered';
+    case Undelivered = "undelivered";
     case Shipped = 'shipped';
     case Returned = 'returned';
     case Supplied = 'supplied';

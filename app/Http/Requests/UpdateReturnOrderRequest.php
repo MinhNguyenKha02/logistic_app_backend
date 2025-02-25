@@ -39,7 +39,6 @@ class UpdateReturnOrderRequest extends FormRequest
             return [
 //                'id'=>'required',
                 'customer_id'=>'required',
-                'product_id'=>'required',
                 'date'=>'required|date',
                 'reason'=>'required',
                 'status'=>'required'
